@@ -1,0 +1,53 @@
+@id=62cd5be74a0e789e3813e2fa
+@host=http://localhost:3000
+
+
+GET {{host}}
+
+### Create a new message
+POST {{host}}/messages
+Content-Type:application/json
+
+ {"_id": 101,
+    "author_id": 101,
+    "date":"2009-05-17T21:01:09.476Z",
+    "text":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    "likes":33,
+    "comments":[
+
+    ]
+    }
+
+### Get all messages
+GET {{host}}/messages
+
+### Get one specific message by id
+GET {{host}}/message/{{id}}
+
+### Patch one specific message
+PATCH {{host}}/message/{{id}}
+Content-Type:application/json
+
+{
+   "key":"likes",
+   "value":"99"
+}
+
+### UPDATE one specific message
+PUT {{host}}/{{id}}
+Content-Type:application/json
+
+ {"_id": 101,
+    "author_id": 101,
+    "date":"2009-05-17T21:01:09.476Z",
+    "text":"Lorem ipsum dolor sit amet",
+    "likes":33,
+    "comments":[
+
+    ]
+    }
+
+
+### Delete one specific message
+DELETE {{host}}/messages/{{id}}
+

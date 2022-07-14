@@ -2,7 +2,7 @@ const mongoose =require('mongoose');
 
 const Schema=mongoose.Schema;
 
-const messageSchema = new Schema({
+const userSchema = new Schema({
     first_name:{type:String, min: 2, max:50, required:true},
     last_name:{type:String, min: 2, max:50, required:true},
     active:{type:Boolean, default:true},
@@ -14,6 +14,6 @@ const messageSchema = new Schema({
 )
 
 //Model is a class and compiles the schema. It contains the blueprint and makes it possible to make queries.
-const Message=mongoose.model('Message', messageSchema);
+const User=mongoose.model('User', userSchema);
 
-module.exports = Message;
+module.exports = User;
