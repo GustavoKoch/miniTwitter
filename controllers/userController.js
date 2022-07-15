@@ -1,40 +1,21 @@
 const User = require("../models/User");
 
 /* GET ALL */
-const list_all_users = async(req, res) => {
- 
-    try {
-      const users = await User.find({});
-      res.json(users);
-    } catch {
-      (error) => console.log(error.message);
-    }
-  
+const list_all_users = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch {
+    (error) => console.log(error.message);
+  }
 };
 
 /* CREATE ONE */
 const create_one_user = async (req, res) => {
-  const {  
-      name,
-      username,
-      email,
-      picture,
-      Age,
-      City,
-      Description,  
-  
-  } = req.body;
+  const users = req.body;
 
   try {
-    const newUser = await User.create({
-      name,
-      username,
-      email,
-      picture,
-      Age,
-      City,
-      Description, 
-    });
+    const newUser = await User.create(users);
     res.json(newUser);
   } catch {
     (error) => console.log(error.message);
@@ -42,13 +23,25 @@ const create_one_user = async (req, res) => {
 };
 
 /* GET ONE */
-const find_one_user = async (req, res) => {
+/* const find_one_user = async (req, res) => {
   const { id } = req.params;
   try {
     const specificUser = await User.findById(id);
     if (!specificUser)
       return res.status(404).send("This user does not exist");
     res.json(specificUser);
+  } catch {
+    (error) => console.log(error.message);
+  }
+}; */
+
+const find_one_user = (req, res) => {
+  const { id } = req.params;
+  try {
+    User.findById(id, (err, docs) => {
+      if (err) return res.status(404).send("This user does not exist");
+      else res.json(docs);
+    });
   } catch {
     (error) => console.log(error.message);
   }
@@ -60,10 +53,7 @@ const partUpdate_one_user = async (req, res) => {
   const { key, value } = req.body;
 
   try {
-    const updatedUser = await User.updateOne(
-      { _id: id },
-      { [key]: value }
-    );
+    const updatedUser = await User.updateOne({ _id: id }, { [key]: value });
     if (!updatedUser.modifiedCount)
       return res
         .status(404)
@@ -73,25 +63,31 @@ const partUpdate_one_user = async (req, res) => {
     (error) => console.log(error.message);
   }
 };
-/* UPDATE  */
+/* UPDATE with PUT */
 const fullUpdate_one_user = async (req, res) => {
   const { id } = req.params;
+ 
   try {
-    const updatedUser = await User.findOneAndUpdate(id, req.body, {
-      new: false,
-      runValidators: true,
+    let updatedUser = await User.findOneAndUpdate( id , req.body, {
+      new: true,
+      runValidators: true,      
     });
     console.log(updatedUser);
     if (!updatedUser)
       return res
         .status(404)
-        .send("This user does not exist, and can not be changed");
+        .send("This user does not exist, or can not be changed");
 
     res.json(updatedUser).send("user patched succesfully!");
   } catch {
     (error) => console.log(error.message);
   }
 };
+
+
+
+
+
 /* DELETE */
 const delete_one_user = async (req, res) => {
   const { id } = req.params;

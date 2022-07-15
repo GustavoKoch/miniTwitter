@@ -1,36 +1,21 @@
 const Message = require("../models/Message");
 
 /* GET ALL */
-const list_all_messages = async(req, res) => {
- 
-    try {
-      const messages = await Message.find({});
-      res.json(messages);
-    } catch {
-      (error) => console.log(error.message);
-    }
-  
+const list_all_messages = async (req, res) => {
+  try {
+    const messages = await Message.find({});
+    res.json(messages);
+  } catch {
+    (error) => console.log(error.message);
+  }
 };
 
 /* CREATE ONE */
 const create_one_message = async (req, res) => {
-  const { 
-    author_id,
-    date,
-    text,
-    likes,
-    comment
-  
-  } = req.body;
+  const messages = req.body;
 
   try {
-    const newmessage = await Message.create({
-      author_id,
-      date,
-      text,
-      likes,
-      comment,
-    });
+    const newmessage = await Message.create(messages);
     res.json(newmessage);
   } catch {
     (error) => console.log(error.message);
@@ -38,13 +23,25 @@ const create_one_message = async (req, res) => {
 };
 
 /* GET ONE */
-const find_one_message = async (req, res) => {
+/* const find_one_message = async (req, res) => {
   const { id } = req.params;
   try {
     const specificmessage = await Message.findById(id);
     if (!specificmessage)
       return res.status(404).send("This message does not exist");
     res.json(specificmessage);
+  } catch {
+    (error) => console.log(error.message);
+  }
+}; */
+
+const find_one_message = (req, res) => {
+  const { id } = req.params;
+  try {
+    Message.findById(id, (err, docs) => {
+      if (err) return res.status(404).send("This message does not exist");
+      else res.json(docs);
+    });
   } catch {
     (error) => console.log(error.message);
   }
