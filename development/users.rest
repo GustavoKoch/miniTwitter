@@ -8,7 +8,7 @@ GET {{host}}
 POST {{host}}/users
 Content-Type:application/json
 
-   {"_id": 101,
+   {
     "name": {
         "title": "Ms",
         "first": "Liesje",

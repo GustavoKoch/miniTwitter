@@ -1,10 +1,10 @@
-const user = require("../models/User");
+const User = require("../models/User");
 
 /* GET ALL */
 const list_all_users = async(req, res) => {
  
     try {
-      const users = await user.find({});
+      const users = await User.find({});
       res.json(users);
     } catch {
       (error) => console.log(error.message);
@@ -14,15 +14,28 @@ const list_all_users = async(req, res) => {
 
 /* CREATE ONE */
 const create_one_user = async (req, res) => {
-  const { first_name, last_name, class_type } = req.body;
+  const {  
+      name,
+      username,
+      email,
+      picture,
+      Age,
+      City,
+      Description,  
+  
+  } = req.body;
 
   try {
-    const newuser = await user.create({
-      first_name,
-      last_name,
-      class_type,
+    const newUser = await User.create({
+      name,
+      username,
+      email,
+      picture,
+      Age,
+      City,
+      Description, 
     });
-    res.json(newuser);
+    res.json(newUser);
   } catch {
     (error) => console.log(error.message);
   }
@@ -32,10 +45,10 @@ const create_one_user = async (req, res) => {
 const find_one_user = async (req, res) => {
   const { id } = req.params;
   try {
-    const specificuser = await user.findById(id);
-    if (!specificuser)
+    const specificUser = await User.findById(id);
+    if (!specificUser)
       return res.status(404).send("This user does not exist");
-    res.json(specificuser);
+    res.json(specificUser);
   } catch {
     (error) => console.log(error.message);
   }
@@ -47,11 +60,11 @@ const partUpdate_one_user = async (req, res) => {
   const { key, value } = req.body;
 
   try {
-    const updateduser = await user.updateOne(
+    const updatedUser = await User.updateOne(
       { _id: id },
       { [key]: value }
     );
-    if (!updateduser.modifiedCount)
+    if (!updatedUser.modifiedCount)
       return res
         .status(404)
         .send("This user does not exist, and can not be patched");
@@ -64,17 +77,17 @@ const partUpdate_one_user = async (req, res) => {
 const fullUpdate_one_user = async (req, res) => {
   const { id } = req.params;
   try {
-    const updateduser = await user.findOneAndUpdate(id, req.body, {
+    const updatedUser = await User.findOneAndUpdate(id, req.body, {
       new: false,
       runValidators: true,
     });
-    console.log(updateduser);
-    if (!updateduser)
+    console.log(updatedUser);
+    if (!updatedUser)
       return res
         .status(404)
         .send("This user does not exist, and can not be changed");
 
-    res.json(updateduser).send("user patched succesfully!");
+    res.json(updatedUser).send("user patched succesfully!");
   } catch {
     (error) => console.log(error.message);
   }
@@ -83,13 +96,13 @@ const fullUpdate_one_user = async (req, res) => {
 const delete_one_user = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleteduser = await user.findOneAndDelete({ _id: id });
-    if (!deleteduser) {
+    const deletedUser = await User.findOneAndDelete({ _id: id });
+    if (!deletedUser) {
       return res
         .status(404)
         .send("This user does not exist, and can not be deleted");
     }
-    res.json(deleteduser).send("user deleted succesfully!");
+    res.json(deletedUser).send("user deleted succesfully!");
   } catch {
     (error) => console.log(error.message);
   }
@@ -103,7 +116,7 @@ const delete_many_users = async (req, res) => {
       return res.status(404).send("Provide a valid key-value pair!!");
     }
 
-    const deletedManyusers = await user.deleteMany({ [key]: value });
+    const deletedManyusers = await User.deleteMany({ [key]: value });
     res.json(deletedManyusers).send("userSSS deleted succesfully!");
   } catch {
     (error) => console.log(error.message);

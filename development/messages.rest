@@ -8,14 +8,13 @@ GET {{host}}
 POST {{host}}/messages
 Content-Type:application/json
 
- {"_id": 101,
-    "author_id": 101,
+ {
+    "author_id": "62d148886dce6a8db489aba2",
     "date":"2009-05-17T21:01:09.476Z",
     "text":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     "likes":33,
-    "comments":[
-
-    ]
+    "comments":""
+    
     }
 
 ### Get all messages

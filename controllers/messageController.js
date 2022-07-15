@@ -1,10 +1,10 @@
-const message = require("../models/message");
+const Message = require("../models/Message");
 
 /* GET ALL */
 const list_all_messages = async(req, res) => {
  
     try {
-      const messages = await message.find({});
+      const messages = await Message.find({});
       res.json(messages);
     } catch {
       (error) => console.log(error.message);
@@ -14,13 +14,22 @@ const list_all_messages = async(req, res) => {
 
 /* CREATE ONE */
 const create_one_message = async (req, res) => {
-  const { first_name, last_name, class_type } = req.body;
+  const { 
+    author_id,
+    date,
+    text,
+    likes,
+    comment
+  
+  } = req.body;
 
   try {
-    const newmessage = await message.create({
-      first_name,
-      last_name,
-      class_type,
+    const newmessage = await Message.create({
+      author_id,
+      date,
+      text,
+      likes,
+      comment,
     });
     res.json(newmessage);
   } catch {
@@ -32,7 +41,7 @@ const create_one_message = async (req, res) => {
 const find_one_message = async (req, res) => {
   const { id } = req.params;
   try {
-    const specificmessage = await message.findById(id);
+    const specificmessage = await Message.findById(id);
     if (!specificmessage)
       return res.status(404).send("This message does not exist");
     res.json(specificmessage);
@@ -47,51 +56,51 @@ const partUpdate_one_message = async (req, res) => {
   const { key, value } = req.body;
 
   try {
-    const updatedmessage = await message.updateOne(
+    const updatedMessage = await Message.updateOne(
       { _id: id },
       { [key]: value }
     );
-    if (!updatedmessage.modifiedCount)
+    if (!updatedMessage.modifiedCount)
       return res
         .status(404)
-        .send("This message does not exist, and can not be patched");
-    res.send("message patched succesfully!");
+        .send("This Message does not exist, and can not be patched");
+    res.send("Message patched succesfully!");
   } catch {
-    (error) => console.log(error.message);
+    (error) => console.log(error.Message);
   }
 };
 /* UPDATE  */
 const fullUpdate_one_message = async (req, res) => {
   const { id } = req.params;
   try {
-    const updatedmessage = await message.findOneAndUpdate(id, req.body, {
+    const updatedMessage = await Message.findOneAndUpdate(id, req.body, {
       new: false,
       runValidators: true,
     });
-    console.log(updatedmessage);
-    if (!updatedmessage)
+    console.log(updatedMessage);
+    if (!updatedMessage)
       return res
         .status(404)
-        .send("This message does not exist, and can not be changed");
+        .send("This Message does not exist, and can not be changed");
 
-    res.json(updatedmessage).send("message patched succesfully!");
+    res.json(updatedMessage).send("Message patched succesfully!");
   } catch {
-    (error) => console.log(error.message);
+    (error) => console.log(error.Message);
   }
 };
 /* DELETE */
 const delete_one_message = async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedmessage = await message.findOneAndDelete({ _id: id });
-    if (!deletedmessage) {
+    const deletedMessage = await Message.findOneAndDelete({ _id: id });
+    if (!deletedMessage) {
       return res
         .status(404)
-        .send("This message does not exist, and can not be deleted");
+        .send("This Message does not exist, and can not be deleted");
     }
-    res.json(deletedmessage).send("message deleted succesfully!");
+    res.json(deletedMessage).send("Message deleted succesfully!");
   } catch {
-    (error) => console.log(error.message);
+    (error) => console.log(error.Message);
   }
 };
 /* DELETE MANY */
@@ -103,8 +112,8 @@ const delete_many_messages = async (req, res) => {
       return res.status(404).send("Provide a valid key-value pair!!");
     }
 
-    const deletedManymessages = await message.deleteMany({ [key]: value });
-    res.json(deletedManymessages).send("messageSSS deleted succesfully!");
+    const deletedManyMessages = await Message.deleteMany({ [key]: value });
+    res.json(deletedManyMessages).send("MessageSSS deleted succesfully!");
   } catch {
     (error) => console.log(error.message);
   }

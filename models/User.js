@@ -3,13 +3,19 @@ const mongoose =require('mongoose');
 const Schema=mongoose.Schema;
 
 const userSchema = new Schema({
-    first_name:{type:String, min: 2, max:50, required:true},
-    last_name:{type:String, min: 2, max:50, required:true},
-    active:{type:Boolean, default:true},
-    class_type: {
-        type:String,
-        enum:['Champion', 'Rocket', 'Psychic', 'Rival']
-    }    
+    
+                name: {   
+                    title: String,
+                    first: String,
+                    last: String
+                },
+                username:{type:String, min: 2, max:50, required:true},
+                email:{type:String, min: 2, max:50, required:true},            
+                picture:{type:String, min: 2, max:50, required:true},
+                Age:  { type: Number, min: 1, max: 999 },
+                City: {type:String, min: 2, max:50, required:true},
+                Description: {type:String, min: 2, max:9999, required:true}
+    
 }, {timestamps:true}
 )
 
@@ -17,3 +23,12 @@ const userSchema = new Schema({
 const User=mongoose.model('User', userSchema);
 
 module.exports = User;
+
+/*                 email: {        
+                        type: String,
+                        trim: true,
+                        lowercase: true,
+                        unique: true,
+                        required: 'Email address is required',
+                        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+                }, */
