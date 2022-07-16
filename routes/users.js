@@ -37,6 +37,6 @@ router
   .put(fullUpdate_one_user)
   .delete(delete_one_user);
 router
-.get("/messages/:id", find_messages);
+.get("/:id/messages", find_messages);
 
   module.exports = router;

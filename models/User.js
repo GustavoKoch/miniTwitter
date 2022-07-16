@@ -1,5 +1,7 @@
 const mongoose =require('mongoose');
 
+const { mapReduce } = require("./Message");
+
 const Schema=mongoose.Schema;
 
 const userSchema = new Schema({
@@ -14,8 +16,7 @@ const userSchema = new Schema({
                 picture:{type:String, min: 2, max:50, required:true},
                 Age:  { type: Number, min: 1, max: 999 },
                 City: {type:String, min: 2, max:50, required:true},
-                Description: {type:String, min: 2, max:9999, required:true},
-                messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+                Description: {type:String, min: 2, max:9999, required:true}
 
     
 }, {timestamps:true}

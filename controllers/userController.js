@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Message = require("../models/Message");
+
 
 /* GET ALL */
 const list_all_users = async (req, res) => {
@@ -15,6 +17,7 @@ const create_one_user = async (req, res) => {
   const users = req.body;
 
   try {
+    console.log('Creating users')
     const newUser = await User.create(users);
     res.json(newUser);
   } catch {
@@ -120,11 +123,15 @@ const delete_many_users = async (req, res) => {
 };
 
 const find_messages = async (req, res) => {
+  // res.send("Hello there!")
   const { id } = req.params;
   try {
-    const user = await User.findOne({ id }).populate("messages");
+    const user = await User.findById(id)
     if (!user) return res.status(404).send("This user hasn't posted yet!");
-    res.json(user);
+
+    const messages = await Message.find({ author_id: user._id })
+
+    res.json({user, messages});
   } catch (error) {
     res.status(500).send(error.message);
   }
