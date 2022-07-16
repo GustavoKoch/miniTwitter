@@ -1,9 +1,10 @@
 const Message = require("../models/Message");
+const User = require("../models/User");
 
 /* GET ALL */
 const list_all_messages = async (req, res) => {
   try {
-    const messages = await Message.find({});
+    const messages = await Message.find({}).populate("author_id", { "name": 1, "username": 1, "picture": 1});
     res.json(messages);
   } catch {
     (error) => console.log(error.message);
