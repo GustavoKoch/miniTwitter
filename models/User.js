@@ -14,7 +14,9 @@ const userSchema = new Schema({
                 picture:{type:String, min: 2, max:50, required:true},
                 Age:  { type: Number, min: 1, max: 999 },
                 City: {type:String, min: 2, max:50, required:true},
-                Description: {type:String, min: 2, max:9999, required:true}
+                Description: {type:String, min: 2, max:9999, required:true},
+                messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+
     
 }, {timestamps:true}
 )

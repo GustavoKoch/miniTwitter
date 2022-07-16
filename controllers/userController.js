@@ -119,6 +119,17 @@ const delete_many_users = async (req, res) => {
   }
 };
 
+const find_messages = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findOne({ id }).populate("messages");
+    if (!user) return res.status(404).send("This user hasn't posted yet!");
+    res.json(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   list_all_users,
   find_one_user,
@@ -127,4 +138,5 @@ module.exports = {
   fullUpdate_one_user,
   delete_one_user,
   delete_many_users,
+  find_messages,
 };
