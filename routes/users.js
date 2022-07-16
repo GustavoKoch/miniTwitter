@@ -19,7 +19,8 @@ const {
   partUpdate_one_user,
   fullUpdate_one_user,
   delete_one_user,
-  delete_many_users
+  delete_many_users,
+  find_messages
 } = require("../controllers/userController");
 
 
@@ -35,6 +36,7 @@ router
   .patch(partUpdate_one_user)
   .put(fullUpdate_one_user)
   .delete(delete_one_user);
-
+router
+.get("/:id/messages", find_messages);
 
   module.exports = router;

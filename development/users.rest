@@ -101,7 +101,7 @@ Content-Type:application/json
 GET {{host}}/users
 
 
-@id=62d1b5b0508e4007b3a5f654
+@id=62d1a9bbc73d8595a505db1b
 ### Get one specific user by id
 GET {{host}}/users/{{id}}
 
@@ -136,3 +136,7 @@ Content-Type:application/json
 ### Delete one specific user
 DELETE {{host}}/users/{{id}}
 
+
+
+### Get all messages from one user
+GET {{host}}/users/{{id}}/messages
